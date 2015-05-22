@@ -13,7 +13,7 @@
 		5594DCDC1B0E853E00B5FF4F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5594DCDB1B0E853E00B5FF4F /* Images.xcassets */; };
 		5594DCDF1B0E853E00B5FF4F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5594DCDD1B0E853E00B5FF4F /* LaunchScreen.xib */; };
 		5594DCEB1B0E853F00B5FF4F /* ChartingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5594DCEA1B0E853F00B5FF4F /* ChartingTests.swift */; };
-		5594DCF51B0E857200B5FF4F /* PieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5594DCF41B0E857200B5FF4F /* PieChart.swift */; };
+		5594DCF51B0E857200B5FF4F /* Charting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5594DCF41B0E857200B5FF4F /* Charting.swift */; };
 		55A997D81B0F9FFD00FD9860 /* LegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A997D71B0F9FFD00FD9860 /* LegendView.swift */; };
 		55A997DA1B0FB48500FD9860 /* UIColor-Charting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A997D91B0FB48500FD9860 /* UIColor-Charting.swift */; };
 /* End PBXBuildFile section */
@@ -39,7 +39,7 @@
 		5594DCE41B0E853F00B5FF4F /* ChartingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChartingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5594DCE91B0E853F00B5FF4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5594DCEA1B0E853F00B5FF4F /* ChartingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartingTests.swift; sourceTree = "<group>"; };
-		5594DCF41B0E857200B5FF4F /* PieChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
+		5594DCF41B0E857200B5FF4F /* Charting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Charting.swift; sourceTree = "<group>"; };
 		55A997D71B0F9FFD00FD9860 /* LegendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendView.swift; sourceTree = "<group>"; };
 		55A997D91B0FB48500FD9860 /* UIColor-Charting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor-Charting.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,7 +89,7 @@
 				5594DCDB1B0E853E00B5FF4F /* Images.xcassets */,
 				5594DCDD1B0E853E00B5FF4F /* LaunchScreen.xib */,
 				5594DCD21B0E853E00B5FF4F /* Supporting Files */,
-				5594DCF41B0E857200B5FF4F /* PieChart.swift */,
+				5594DCF41B0E857200B5FF4F /* Charting.swift */,
 				55A997D71B0F9FFD00FD9860 /* LegendView.swift */,
 				55A997D91B0FB48500FD9860 /* UIColor-Charting.swift */,
 			);
@@ -221,7 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5594DCF51B0E857200B5FF4F /* PieChart.swift in Sources */,
+				5594DCF51B0E857200B5FF4F /* Charting.swift in Sources */,
 				55A997D81B0F9FFD00FD9860 /* LegendView.swift in Sources */,
 				55A997DA1B0FB48500FD9860 /* UIColor-Charting.swift in Sources */,
 				5594DCD71B0E853E00B5FF4F /* ViewController.swift in Sources */,
