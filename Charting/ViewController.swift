@@ -9,8 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-    @IBOutlet weak var pieChart: PieChart!
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,10 +18,13 @@ class ViewController: UIViewController {
         data.append(DataPoint(name: "Pots and Pans", value: 13))
         data.append(DataPoint(name: "Cutlery", value: 74))
         
-        pieChart.data = data
+        var chart: ChartView = BarChart()
+        chart.frame = CGRectMake(200, 200, 400, 400)
+        view.addSubview(chart)
+        chart.data = data
 
         // taken from http://www.mulinblog.com/a-color-palette-optimized-for-data-visualization/
-        pieChart.colors = [
+        chart.colors = [
             UIColor(hex: "4D4D4D"),
             UIColor(hex: "5DA5DA"),
             UIColor(hex: "FAA43A"),

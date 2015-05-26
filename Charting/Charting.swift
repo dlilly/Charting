@@ -10,22 +10,32 @@ import UIKit
 
 let PI: CGFloat = 3.14
 let kRadian: CGFloat = PI / 180
+let lineHeight: CGFloat = 30
 
-typealias DataPoint = (name: String, value: CGFloat)
-typealias ColoredDataPoint = (data: DataPoint, color: UIColor)
+public class DataPoint {
+    var name: String!
+    var value: CGFloat!
+    var color: UIColor!
 
-class PieChart: UIView {
+    init(name: String!, value: CGFloat!, color: UIColor? = nil) {
+        self.name = name
+        self.value = value
+        self.color = color
+    }
+}
+
+public class ChartView: UIView {
     var data: [DataPoint]!
     var chartView: UIView!
     var legendView: LegendView!
-    var colors: [UIColor]! = nil
+    var colors: [UIColor]! = nil { didSet { baseColor = colors[0] } }
     var baseColor: UIColor = UIColor.redColor()
-    
-    override func drawRect(rect: CGRect) {
+
+    override public func drawRect(rect: CGRect) {
         if colors == nil {
             colors = [UIColor]()
             colors.append(baseColor)
-
+            
             var redValue: CGFloat = 0.0
             var greenValue: CGFloat = 0.0
             var blueValue: CGFloat = 0.0
@@ -40,7 +50,12 @@ class PieChart: UIView {
             colors.append(UIColor(red: 1 - greenValue, green: 1 - blueValue, blue: 1 - redValue, alpha: alphaValue))
             colors.append(UIColor(red: 1 - blueValue, green: 1 - redValue, blue: 1 - greenValue, alpha: alphaValue))
         }
-        
+    }
+}
+
+public class PieChart: ChartView {
+    override public func drawRect(rect: CGRect) {
+        super.drawRect(rect)
         var total: CGFloat = data.reduce(0, combine: { $0 + $1.value })
 
         // set up the subviews (chart and legend)
@@ -54,16 +69,15 @@ class PieChart: UIView {
         // set up two areas: one for the chart, and one for the legend
         var chartRect = chartView.frame
         
-        var coloredData: [ColoredDataPoint] = [ColoredDataPoint]()
         var subtotal: CGFloat = 0
         for (index, datum) in enumerate(data) {
             var color = colors[index % colors.count]
             drawSlice(chartRect, degrees: datum.value / total * 360, startPos: subtotal, color: color)
-            coloredData.append(ColoredDataPoint(data: datum, color: color))
+            datum.color = color
             subtotal += datum.value / total * 360
         }
 
-        legendView.data = coloredData
+        legendView.data = data
     }
 
     func drawSlice(rect: CGRect, degrees: CGFloat, startPos: CGFloat, color: UIColor) {
@@ -76,5 +90,47 @@ class PieChart: UIView {
         path.addArcWithCenter(center, radius: radius, startAngle: kRadian * startPos, endAngle: kRadian * (degrees + startPos), clockwise: true)
         color.setFill()
         path.fill()
+    }
+}
+
+public class BarChart: ChartView {
+    override public func drawRect(rect: CGRect) {
+        super.drawRect(rect)
+        
+        // no legend for bar chart as the data labels are displayed next to the data
+        chartView = UIView(frame: CGRectMake(0, 0, rect.width, rect.height))
+        chartView.backgroundColor = UIColor.whiteColor()
+        
+        addSubview(chartView)
+        
+        var numberOfDataPoints: Int = min(data.count, Int(rect.height) / Int(lineHeight))
+        
+        var chartHeight = CGFloat(numberOfDataPoints) * (lineHeight + 5)
+        
+        var chartRect = chartView.frame.centeredRect(CGSizeMake(chartView.frame.width - 10, chartHeight))
+        var cv = UIView(frame: chartRect)
+        
+        chartView.addSubview(cv)
+        
+        var maxValue = findMax(data)
+        for var i: Int = 0; i < numberOfDataPoints; i++ {
+            var datum = data[i]
+
+            var dataView = UIView(frame: CGRectMake(0, CGFloat(i) * (lineHeight + 5), cv.frame.size.width, lineHeight))
+            cv.addSubview(dataView)
+
+            var label = UILabel(frame: CGRectMake(0, 0, dataView.frame.width * 0.4, dataView.frame.height))
+            label.text = datum.name
+            
+            dataView.addSubview(label)
+            
+            var barLength: CGFloat = datum.value / maxValue * cv.frame.size.width
+            var barContainer = UIView(frame: CGRectMake(dataView.frame.width * 0.4, 0, dataView.frame.width * 0.6, lineHeight))
+            var barView = UIView(frame: barContainer.frame.verticalCenteredRect(CGSizeMake(barLength, lineHeight - 5)))
+
+            barView.backgroundColor = baseColor
+            barContainer.addSubview(barView)
+            dataView.addSubview(barContainer)
+        }
     }
 }

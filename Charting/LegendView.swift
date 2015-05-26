@@ -9,7 +9,8 @@
 import UIKit
 
 class LegendView: UIView {
-    var data: [ColoredDataPoint]!
+    var data: [DataPoint]!
+    var displayBorders: Bool = true
     
     override func drawRect(rect: CGRect) {
         // how tall do i need to be?  30px for every data point plus 20px on top and bottom for buffer
@@ -21,10 +22,12 @@ class LegendView: UIView {
         var legendFrameBottomRight: CGPoint = CGPointMake(legendFrameTopLeft.x + legendWidth, legendFrameTopLeft.y + legendHeight)
         var legendFrameBottomLeft: CGPoint = CGPointMake(legendFrameTopLeft.x, legendFrameTopLeft.y + legendHeight)
 
-        drawLine(legendFrameTopLeft, end: legendFrameTopRight)
-        drawLine(legendFrameTopRight, end: legendFrameBottomRight)
-        drawLine(legendFrameBottomRight, end: legendFrameBottomLeft)
-        drawLine(legendFrameBottomLeft, end: legendFrameTopLeft)
+        if displayBorders {
+            drawLine(legendFrameTopLeft, end: legendFrameTopRight)
+            drawLine(legendFrameTopRight, end: legendFrameBottomRight)
+            drawLine(legendFrameBottomRight, end: legendFrameBottomLeft)
+            drawLine(legendFrameBottomLeft, end: legendFrameTopLeft)
+        }
         
         // draw each data point
         for (index, datum) in enumerate(data) {
@@ -34,7 +37,7 @@ class LegendView: UIView {
             var colorView: UIView = UIView(frame: CGRectMake(5.0, dpRect.origin.y + 5.0, 20.0, 20.0))
             
             dataLabel.font = UIFont.systemFontOfSize(13.0)
-            dataLabel.text = datum.data.name
+            dataLabel.text = datum.name
             addSubview(dataLabel)
 
             colorView.backgroundColor = datum.color
