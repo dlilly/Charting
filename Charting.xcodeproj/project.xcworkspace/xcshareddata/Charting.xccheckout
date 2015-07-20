@@ -10,14 +10,14 @@
 	<string>Charting</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>DF7A3F00969A434A85722C4255FD74FB50FD1DA7</key>
+		<key>AEDC1404B78FD17BD77A23DA26A9AA23B6127342</key>
 		<string>github.com:dlilly/Charting.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Charting.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>DF7A3F00969A434A85722C4255FD74FB50FD1DA7</key>
+		<key>AEDC1404B78FD17BD77A23DA26A9AA23B6127342</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>DF7A3F00969A434A85722C4255FD74FB50FD1DA7</string>
+	<string>AEDC1404B78FD17BD77A23DA26A9AA23B6127342</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>DF7A3F00969A434A85722C4255FD74FB50FD1DA7</string>
+			<string>AEDC1404B78FD17BD77A23DA26A9AA23B6127342</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Charting</string>
 		</dict>

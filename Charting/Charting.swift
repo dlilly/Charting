@@ -17,7 +17,7 @@ public class DataPoint {
     var value: CGFloat!
     var color: UIColor!
 
-    init(name: String!, value: CGFloat!, color: UIColor? = nil) {
+    public init(name: String!, value: CGFloat!, color: UIColor? = nil) {
         self.name = name
         self.value = value
         self.color = color
@@ -25,11 +25,13 @@ public class DataPoint {
 }
 
 public class ChartView: UIView {
-    var data: [DataPoint]!
+    public var data: [DataPoint]!
+
     var chartView: UIView!
     var legendView: LegendView!
-    var colors: [UIColor]! = nil { didSet { baseColor = colors[0] } }
-    var baseColor: UIColor = UIColor.redColor()
+    
+    public var colors: [UIColor]! = nil { didSet { baseColor = colors[0] } }
+    public var baseColor: UIColor = UIColor.redColor()
 
     override public func drawRect(rect: CGRect) {
         if colors == nil {
@@ -56,11 +58,13 @@ public class ChartView: UIView {
 public class PieChart: ChartView {
     override public func drawRect(rect: CGRect) {
         super.drawRect(rect)
+
         var total: CGFloat = data.reduce(0, combine: { $0 + $1.value })
 
         // set up the subviews (chart and legend)
         chartView = UIView(frame: CGRectMake(0, 0, frame.size.width * 0.75, frame.size.height))
-        legendView = LegendView(frame: CGRectMake(frame.size.width * 0.75, 0, frame.size.width * 0.24, frame.size.height))
+        chartView.backgroundColor = UIColor.clearColor()
+        legendView = LegendView(frame: CGRectMake(frame.size.width * 0.75, frame.origin.y, frame.size.width * 0.24, frame.size.height))
         legendView.backgroundColor = UIColor.whiteColor()
         
         addSubview(chartView)
@@ -68,6 +72,10 @@ public class PieChart: ChartView {
 
         // set up two areas: one for the chart, and one for the legend
         var chartRect = chartView.frame
+        
+        let bg = UIBezierPath(rect: chartRect)
+        UIColor.whiteColor().setFill()
+        bg.fill()
         
         var subtotal: CGFloat = 0
         for (index, datum) in enumerate(data) {
@@ -94,13 +102,14 @@ public class PieChart: ChartView {
 }
 
 public class BarChart: ChartView {
+    public var dataLabelFormatter: (CGFloat) -> String = { "\($0)" }
+    
     override public func drawRect(rect: CGRect) {
         super.drawRect(rect)
         
         // no legend for bar chart as the data labels are displayed next to the data
-        chartView = UIView(frame: CGRectMake(0, 0, rect.width, rect.height))
+        chartView = UIView(frame: CGRectMake(0, 0, frame.size.width, frame.size.height))
         chartView.backgroundColor = UIColor.whiteColor()
-        
         addSubview(chartView)
         
         var numberOfDataPoints: Int = min(data.count, Int(rect.height) / Int(lineHeight))
@@ -112,6 +121,8 @@ public class BarChart: ChartView {
         
         chartView.addSubview(cv)
         
+        data.sort({ $0.value > $1.value })
+        
         var maxValue = findMax(data)
         for var i: Int = 0; i < numberOfDataPoints; i++ {
             var datum = data[i]
@@ -119,17 +130,26 @@ public class BarChart: ChartView {
             var dataView = UIView(frame: CGRectMake(0, CGFloat(i) * (lineHeight + 5), cv.frame.size.width, lineHeight))
             cv.addSubview(dataView)
 
-            var label = UILabel(frame: CGRectMake(0, 0, dataView.frame.width * 0.4, dataView.frame.height))
+            var label = UILabel(frame: CGRectMake(0, 0, dataView.frame.width * 0.4 - 10, dataView.frame.height))
             label.text = datum.name
+            label.textAlignment = NSTextAlignment.Right
             
             dataView.addSubview(label)
             
-            var barLength: CGFloat = datum.value / maxValue * cv.frame.size.width
+            var barLength: CGFloat = datum.value / maxValue * cv.frame.size.width * 0.6
             var barContainer = UIView(frame: CGRectMake(dataView.frame.width * 0.4, 0, dataView.frame.width * 0.6, lineHeight))
-            var barView = UIView(frame: barContainer.frame.verticalCenteredRect(CGSizeMake(barLength, lineHeight - 5)))
 
+            var valueLabel = UILabel(frame: CGRectMake(0, 0, barContainer.frame.size.width, barContainer.frame.size.height))
+            valueLabel.text = dataLabelFormatter(datum.value)
+            valueLabel.textAlignment = NSTextAlignment.Center
+            valueLabel.font = UIFont.systemFontOfSize(12.0)
+
+            var barView = UIView(frame: barContainer.frame.verticalCenteredRect(CGSizeMake(barLength, lineHeight - 5)))
             barView.backgroundColor = baseColor
+
             barContainer.addSubview(barView)
+            barContainer.insertSubview(valueLabel, aboveSubview: barView)
+
             dataView.addSubview(barContainer)
         }
     }
